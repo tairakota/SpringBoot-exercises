@@ -31,10 +31,9 @@ public class PgProductDao implements ProductDao {
     @Override
     public int insert(ProductRecord productRecord) {
         MapSqlParameterSource param = new MapSqlParameterSource();
-        param.addValue("id", productRecord.id());
         param.addValue("name", productRecord.name());
         param.addValue("price", productRecord.price());
-        return jdbcTemplate.update("INSERT INTO products VALUES(:id, :name, :price)", param);
+        return jdbcTemplate.update("INSERT INTO products (name, price) VALUES(:name, :price)", param);
     }
 
     @Override

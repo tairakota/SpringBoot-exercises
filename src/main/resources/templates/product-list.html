@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>商品一覧</title>
+</head>
+<body>
+    <h1>商品一覧</h1>
+    <table border="solid">
+        <tr>
+            <td><b>id</b></td>
+            <td><b>名前</b></td>
+            <td><b>値段</b></td>
+        </tr>
+        <tr th:each="product : ${products}">
+            <td><a th:href="@{/product/{id}(id=${product.id})}" th:text="${product.id}"></a></td>
+            <td>[[ ${product.name} ]]</td>
+            <td>[[ ${product.price} ]]</td>
+        </tr>
+    </table>
+</body>
+</html>
