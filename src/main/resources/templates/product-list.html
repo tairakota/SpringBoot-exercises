@@ -12,11 +12,12 @@
             <td><b>名前</b></td>
             <td><b>値段</b></td>
         </tr>
-        <tr th:each="product : ${products}">
+        <tr th:each="product : ${session.products}">
             <td><a th:href="@{/product/{id}(id=${product.id})}" th:text="${product.id}"></a></td>
             <td>[[ ${product.name} ]]</td>
             <td>[[ ${product.price} ]]</td>
         </tr>
     </table>
+    <p><button type="submit"><a th:href="@{/product-add}">追加</a></button></p>
 </body>
 </html>

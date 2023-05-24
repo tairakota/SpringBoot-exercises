@@ -1,13 +1,14 @@
 package com.example.lesson.controller;
 
-import com.example.lesson.LessonApplication;
-import com.example.lesson.Service.PgProductService;
 import com.example.lesson.Service.ProductService;
 import com.example.lesson.form.add.AddForm;
+import com.example.lesson.record.ProductRecord;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,9 @@ public class TestController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private HttpSession session;
+
     @GetMapping("/index")
     @ResponseBody
     public String index() {
@@ -24,9 +28,9 @@ public class TestController {
     }
 
     @GetMapping("/product-list")
-    public String productList(Model model) {
+    public String productList() {
         List list = productService.findAll();
-        model.addAttribute("products", list);
+        session.setAttribute("products", list);
         return "product-list";
     }
 
@@ -43,10 +47,15 @@ public class TestController {
     }
 
     @PostMapping("/product-add")
-    public String login(@ModelAttribute("addForm") AddForm addForm, BindingResult bindingResult) {
+    public String add(@Validated @ModelAttribute("addForm") AddForm addForm, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
-            return "login";
+            return "product-add";
         }
-        return "/product-list";
+        var product = new ProductRecord(null, addForm.getAddName(), Integer.parseInt(addForm.getAddPrice()));
+        productService.insert(product);
+
+        List list = productService.findAll();
+        session.setAttribute("products", list);
+        return "product-list";
     }
 }
