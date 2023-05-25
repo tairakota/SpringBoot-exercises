@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class TestController {
@@ -37,9 +38,10 @@ public class TestController {
     }
 
     @GetMapping("/product/{id}")
-    public String product(Model model, @PathVariable("id") int id) {
+    public String product(@PathVariable("id") int id) {
         var product = productService.findById(id);
-        model.addAttribute("pr", product);
+        session.setAttribute("setId", id);
+        session.setAttribute("pr", product);
         return "product";
     }
 
@@ -78,6 +80,16 @@ public class TestController {
         var id = (Integer)session.getAttribute("updId");
         var product = new ProductRecord(id, updateForm.getUpdateName(), Integer.parseInt(updateForm.getUpdatePrice()));
         productService.update(product);
+
+        List list = productService.findAll();
+        session.setAttribute("products", list);
+        return "product-list";
+    }
+
+    @GetMapping("/product-delete")
+    public String delete() {
+        System.out.println(session.getAttribute("setId"));
+        productService.delete((int)session.getAttribute("setId"));
 
         List list = productService.findAll();
         session.setAttribute("products", list);

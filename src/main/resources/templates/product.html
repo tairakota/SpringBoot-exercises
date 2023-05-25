@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>商品詳細</title>
 </head>
 <body>
     <h1>商品詳細</h1>
-    id：[[ ${pr.id} ]]<br>
-    商品名：[[ ${pr.name} ]]<br>
-    値段：[[ ${pr.price} ]]
+    <p>id：[[ ${session.pr.id} ]]</p>
+    <p>商品名：[[ ${session.pr.name} ]]</p>
+    <p>値段：[[ ${session.pr.price} ]]</p>
+    <p><button type="submit"><a th:href="@{/product-delete}">削除</a></button></p>
 </body>
 </html>
