@@ -8,13 +8,13 @@
 <h1>商品追加</h1>
 <form action="/product-add" method="post" th:object="${addForm}">
     <p>
-        商品名：<input type="text" th:field="*{addName}">
+        [[ #{product.name} ]]<input type="text" th:field="*{addName}">
         <span class="error" th:each="error: ${#fields.errors('addName')}">
                [[ ${error} ]]
         </span>
     </p>
     <p>
-        値段:<input type="text" th:field="*{addPrice}">
+        [[ #{product.price} ]]<input type="text" th:field="*{addPrice}">
         <span class="error" th:each="error: ${#fields.errors('addPrice')}">
                [[ ${error} ]]
         </span>

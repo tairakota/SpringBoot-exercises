@@ -7,15 +7,15 @@
 <body>
 <h1>商品情報更新</h1>
 <form action="/product/update" method="post" th:object="${updateForm}">
-    <p>id：[[ ${session.updId} ]]</p>
+    <p>[[ #{product.id} ]][[ ${session.updId} ]]</p>
     <p>
-        商品名：<input type="text" th:field="*{updateName}">
+        [[ #{product.name} ]]<input type="text" th:field="*{updateName}">
         <span class="error" th:each="error: ${#fields.errors('updateName')}">
                [[ ${error} ]]
         </span>
     </p>
     <p>
-        値段:<input type="text" th:field="*{updatePrice}">
+        [[ #{product.price} ]]<input type="text" th:field="*{updatePrice}">
         <span class="error" th:each="error: ${#fields.errors('updatePrice')}">
                [[ ${error} ]]
         </span>

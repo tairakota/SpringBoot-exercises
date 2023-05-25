@@ -6,9 +6,9 @@
 </head>
 <body>
     <h1>商品詳細</h1>
-    <p>id：[[ ${session.pr.id} ]]</p>
-    <p>商品名：[[ ${session.pr.name} ]]</p>
-    <p>値段：[[ ${session.pr.price} ]]</p>
+    <p>[[ #{product.id} ]][[ ${session.pr.id} ]]</p>
+    <p>[[ #{product.name} ]][[ ${session.pr.name} ]]</p>
+    <p>[[ #{product.price} ]][[ ${session.pr.price} ]]</p>
     <p><button type="submit"><a th:href="@{/product-delete}">削除</a></button></p>
 </body>
 </html>

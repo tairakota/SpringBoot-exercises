@@ -8,9 +8,9 @@
     <h1>商品一覧</h1>
     <table border="solid">
         <tr>
-            <td><b>id</b></td>
-            <td><b>名前</b></td>
-            <td><b>値段</b></td>
+            <td><b th:text="#{list.id}"></b></td>
+            <td><b th:text="#{list.name}"></b></td>
+            <td><b th:text="#{list.price}"></b></td>
         </tr>
         <tr th:each="product : ${session.products}">
             <td><a th:href="@{/product/{id}(id=${product.id})}" th:text="${product.id}"></a></td>

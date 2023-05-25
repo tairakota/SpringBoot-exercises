@@ -10,11 +10,10 @@ import jakarta.validation.constraints.NotEmpty;
 @Data
 public class AddForm {
 
-    @NotEmpty(message = "入力してください。")
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 50, message = "{validation.size}")
     private String addName;
-    @NotEmpty(message = "入力してください。")
-    @Pattern(regexp = "\\d*", message = "数値のみ入力してください。")
-    @PositiveOrZero(message = "マイナスは入力できません。")
+    @NotEmpty(message = "{validation.notEmpty}")
+    @Pattern(regexp = "\\d*", message = "{validation.pattern}")
+    @PositiveOrZero(message = "{validation.positiveOrZero}")
     private String addPrice;
 }
