@@ -2,10 +2,12 @@ package com.example.lesson.controller;
 
 import com.example.lesson.Service.ProductService;
 import com.example.lesson.form.add.AddForm;
+import com.example.lesson.form.update.UpdateForm;
 import com.example.lesson.record.ProductRecord;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -53,6 +55,29 @@ public class TestController {
         }
         var product = new ProductRecord(null, addForm.getAddName(), Integer.parseInt(addForm.getAddPrice()));
         productService.insert(product);
+
+        List list = productService.findAll();
+        session.setAttribute("products", list);
+        return "product-list";
+    }
+
+    @GetMapping("/product/update/{id}")
+    public String index(@PathVariable("id") int id, @ModelAttribute("updateForm") UpdateForm updateForm) {
+        var product = productService.findById(id);
+        session.setAttribute("updId", id);
+        updateForm.setUpdateName(product.name());
+        updateForm.setUpdatePrice(Integer.toString(product.price()));
+        return "product-update";
+    }
+
+    @PostMapping("/product/update")
+    public String update(@Validated @ModelAttribute("updateForm") UpdateForm updateForm, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            return "product-update";
+        }
+        var id = (Integer)session.getAttribute("updId");
+        var product = new ProductRecord(id, updateForm.getUpdateName(), Integer.parseInt(updateForm.getUpdatePrice()));
+        productService.update(product);
 
         List list = productService.findAll();
         session.setAttribute("products", list);
